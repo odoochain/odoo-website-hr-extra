@@ -18,13 +18,13 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api, _
-import openerp.tools
-import xmlrpclib
-from openerp.exceptions import Warning
+from odoo import models, fields, api, _
+import odoo.tools
+#import xmlrpclib
+from odoo.exceptions import UserError
 import os, string
-from openerp import http
-from openerp.http import request
+from odoo import http
+from odoo.http import request
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -39,6 +39,8 @@ class hr_employee(models.Model):
                                   ('13','Stol nr 13'),('14','Stol nr 14'),('none','None'),
                                   ('emeritus','Emeritus'),('adjungerad','Adjungerad')],string='Chair')
     emeritus_year = fields.Integer(string='Emeritus Year', help='The year became emeritus')
+    website_published = fields.Boolean(help='Set if the employee is published on the website of the company.', tracking=True)
+    public_info = fields.Text('Public info', translate=True)
 
 
 class website_hr(http.Controller):
@@ -46,15 +48,16 @@ class website_hr(http.Controller):
     @http.route(['/academy/chairs'], type='http', auth="public", website=True)
     def chairs_members(self, **post):
         employee_ids = request.env['hr.employee'].sudo().search([('chair_nbr', 'not in', ['none', 'emeritus']), ('website_published', '=', True)], order='chair_nbr')
-        return request.website.render("website_hr_academy.chairs", {'employee_ids': employee_ids})
+        _logger.warning(f"{employee_ids=}")
+        return request.render("website_hr_academy.chairs", {'employee_ids': employee_ids})
 
     @http.route(['/academy/member/<model("hr.employee"):employee>'], type='http', auth="public", website=True)
     def chair(self, employee,**post):
-        return request.website.render("website_hr_academy.member", {'employee': request.env['hr.employee'].sudo().browse(employee.id)})
+        return request.render("website_hr_academy.member", {'employee': request.env['hr.employee'].sudo().browse(employee.id)})
 
     @http.route(['/academy/emeritus'], type='http', auth="public", website=True)
     def emeritus(self, **post):
-        return request.website.render("website_hr_academy.emeritus",
+        return request.render("website_hr_academy.emeritus",
             {'emeritus': request.env['hr.employee'].sudo().search([('chair_nbr','=','emeritus')], order='emeritus_year desc')})
 
     @http.route(['/academy/member/<model("hr.employee"):employee>/update'], type='http', auth="public", website=True)
@@ -63,7 +66,7 @@ class website_hr(http.Controller):
             employee.sudo().write({
                 'public_info': post.get('public_info'),
             })
-            return request.website.render("website_hr_academy.member", {'employee': request.env['hr.employee'].sudo().browse(employee.id)})
+            return request.render("website_hr_academy.member", {'employee': request.env['hr.employee'].sudo().browse(employee.id)})
         return request.website.render("website_hr_academy.update_member", {'employee': request.env['hr.employee'].sudo().browse(employee.id)})
 
 

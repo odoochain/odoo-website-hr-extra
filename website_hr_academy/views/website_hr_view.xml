@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
         <!-- Page -->
 
@@ -23,6 +23,9 @@
             <!--</xpath>-->
         <!--</template>-->
 
+<!--
+ odoo8
+-->
         <template id="chairs" name="Our Academy Members">
             <t t-call="website.layout">
                 <div id="wrap">
@@ -36,7 +39,7 @@
                             <div t-foreach="employee_ids" t-as="employee" class="col-sm-3 col-lg-2 mt16 text-center colsize">
                                 <t t-call="website.publish_management"><t t-set="object" t-value="employee"/></t>
                                 <div class="clearfix"/>
-                                <a t-att-href="'/academy/member/%s' % employee.id"><img t-att-src="website.image_url(employee, 'image_medium')" class="img shadow img-rounded"/></a>
+                                <a t-att-href="'/academy/member/%s' % employee.id"><img t-att-src="website.image_url(employee,'image_1024','image_medium')" class="img shadow img-rounded"/></a>
                                 <div class="mt8">
                                     <a t-att-href="'/academy/member/%s' % employee.id"><strong t-field="employee.name"/></a>
                                 </div>
@@ -49,8 +52,13 @@
                 </div>
             </t>
         </template>
+        
 
-        <template id="member" name="Academy Member" page="True">
+
+<!--
+<template id="member" name="Academy Member" page="True">
+-->
+        <template id="member" name="Academy Member">
             <t t-call="website.layout">
                 <div id="wrap">
                     <div class="oe_structure">
@@ -71,7 +79,7 @@
                                             </div>
                                             <div class="o_image_floating o_margin_l pull-left" style="max-width: 400px;">
                                                 <div class="o_container">
-                                                    <img t-att-src="website.imagemagick_url(employee, 'image', 'website_hr_academy.im_hr_single')" class="img img-rounded img-responsive shadow mt16"/>
+                                                    <img t-att-src="website.imagemagick_url(employee, 'image_1024', 'website_hr_academy.im_hr_single')" class="img img-rounded img-responsive shadow mt16"/>
                                                 </div>
                                             </div>
                                             <div class="member-body">
@@ -94,7 +102,11 @@
             </t>
         </template>
 
+
+<!--
         <template id="emeritus" name="Academy Emeritus" page="True">
+-->
+        <template id="emeritus" name="Academy Emeritus">
             <t t-call="website.layout">
                 <div id="wrap">
                     <div class="oe_structure">
@@ -111,7 +123,7 @@
                                             <div class="col-md-12">
                                                 <div class="o_image_floating o_margin_l pull-left" style="max-width: 400px;">
                                                     <div class="o_container text-center">
-                                                        <img t-att-src="website.imagemagick_url(emeritus, 'image', 'website_hr_academy.im_hr_single')" class="img img-rounded img-responsive shadow"/>
+                                                        <img t-att-src="website.imagemagick_url(emeritus, 'image_1024', 'website_hr_academy.im_hr_single')" class="img img-rounded img-responsive shadow"/>
                                                         <h4><strong t-field="emeritus.name"/></h4>
                                                         <t t-call="website.publish_management"><t t-set="object" t-value="emeritus"/></t>
                                                     </div>
@@ -131,8 +143,10 @@
                 </div>
             </t>
         </template>
-
+<!--
         <template id="update_member" name="Update Member" page="True">
+-->
+        <template id="update_member" name="Update Member">
             <t t-call="website.layout">
                 <div id="wrap">
                     <div class="oe_structure">
@@ -148,7 +162,7 @@
                                             </div>
                                             <div class="o_image_floating o_margin_l pull-left" style="max-width: 400px;">
                                                 <div class="o_container">
-                                                    <img t-att-src="website.imagemagick_url(employee, 'image', 'website_hr_academy.im_hr_single')" class="img img-rounded img-responsive shadow mt16"/>
+                                                    <img t-att-src="website.imagemagick_url(employee, 'image_1024', 'website_hr_academy.im_hr_single')" class="img img-rounded img-responsive shadow mt16"/>
                                                 </div>
                                             </div>
                                             <div class="member-body">
@@ -181,15 +195,15 @@
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr.view_employee_form"/>
         <field name="arch" type="xml">
-            <field name="work_location" position="after">
+            <field name="work_location_id" position="after">
                 <field name="chair_nbr"/>
                 <field name="emeritus_year"/>
                 <field name="website_published"/>
-                <field name="public_info" colspan="6"/>
+                <field name="public_info"/>
             </field>
         </field>
 
         </record>
 
     </data>
-</openerp>
+</odoo>

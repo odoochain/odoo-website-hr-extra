@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
 
     <!-- hr single view -->
@@ -22,4 +22,4 @@
     <!-- end of hr single view -->
 
     </data>
-</openerp>
+</odoo>
