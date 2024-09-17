@@ -32,8 +32,8 @@ Acacemy Rewards
     'license': 'AGPL-3',
     'depends': [
         'website',
-        'website_google_map',
-        'website_imagemagick',
+        #'website_google_map',
+        #'website_imagemagick',
         'website_blog',
     ],
     'data': [
