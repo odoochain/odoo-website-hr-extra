@@ -1,1 +1,1 @@
-from . import website_academy_rewards.py
+from . import website_academy_rewards

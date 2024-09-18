@@ -19,13 +19,14 @@
 #
 ##############################################################################
 
-from cStringIO import StringIO
-from openerp import models, fields, api, _
-from openerp import SUPERUSER_ID
-from openerp import http
-from openerp.addons.website.models.website import unslug
-from openerp.tools.translate import _
-from openerp.http import request
+#from cStringIO import StringIO
+from io import StringIO
+from odoo import models, fields, api, _
+from odoo import SUPERUSER_ID
+from odoo import http
+#from odoo.addons.website.models.website import unslug
+from odoo.tools.translate import _
+from odoo.http import request
 import werkzeug.urls
 
 
@@ -51,7 +52,7 @@ class academy_rewardee(models.Model):  # who took prize
     _name = "academy.rewardee"
     _order = "reward_year desc, sequence_rewardee desc"
 
-    @api.one
+    # ~ @api.one
     def _name_(self):
         self.name = '%s - %s' % (self.reward_id.name, self.reward_year)
 

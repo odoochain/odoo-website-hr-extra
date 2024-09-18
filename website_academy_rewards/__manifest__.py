@@ -34,6 +34,7 @@ Acacemy Rewards
         'website',
         #'website_google_map',
         #'website_imagemagick',
+        "crm",
         'website_blog',
     ],
     'data': [
