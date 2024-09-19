@@ -32,8 +32,9 @@ Acacemy Rewards
     'license': 'AGPL-3',
     'depends': [
         'website',
+        'website_hr_academy',
         #'website_google_map',
-        #'website_imagemagick',
+        'website_imagemagick',
         "crm",
         'website_blog',
     ],
