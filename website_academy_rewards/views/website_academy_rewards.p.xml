@@ -1,11 +1,32 @@
+<!-- #if VERSION >= '14.0' -->
 <odoo>
+<!-- #elif VERSION < '14.0' -->
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<!-- #endif -->
     <data>
 
         <!-- Layout add nav and footer -->
+        <!-- #if VERSION == "17.0" -->
+        <template id="footer_custom" inherit_id="website.footer_custom" name="Footer Rewardees Link Custom">
+            <xpath expr="//li[a[@href='/contactus']]" position="after">
+        <!-- #elif VERSION == "master" -->
+        <template id="footer_custom" inherit_id="website.footer_default" name="Footer Rewardees Link">
+            <xpath expr="//div[@id='info']/ul" position="inside">
+        <!-- #endif -->
                 <li><a href="/rewardees">Our Rewardees</a></li>
             </xpath>
         </template>
 
+        <!-- #if VERSION == "17.0" -->
+        <template id="footer_custom" inherit_id="website.template_footer_minimalist" name="Footer Rewardees Link Minimalist">
+            <xpath expr="//li[a[@href='/contactus']]" position="after">
+                <li><a href="/rewardees">Our Rewardees</a></li>
+            </xpath>
+        </template>
+         <!-- #elif VERSION == "master" -->
+         <template id="index_rewardees" name="Our Rewardees">
+         <!-- #endif -->
         
             <t t-call="website.layout">
                 <div id="wrap">
@@ -78,6 +99,11 @@
                                                 <div class="col-md-12">
                                                     <div class="col-md-6 mt16">
                                                         <!--<span t-field="r.sudo().partner_id.image" t-field-options="{&quot;widget&quot;: &quot;image&quot;}"/>-->
+                                                        <!-- #if VERSION == "17.0" -->
+                                                        <img t-att-src="website.imagemagick_url(r.partner_id, 'image_1920', 'website_hr_academy.im_hr_single')" class="img img-rounded img-responsive shadow" style=""/>
+                                                        <!-- #elif VERSION == "master" -->
+                                                        <img t-att-src="website.imagemagick_url(r.partner_id, 'image', 'website_hr_academy.im_hr_single')" class="img img-rounded img-responsive shadow" style=""/>
+                                                        <!-- #endif -->
                                                     </div>
                                                     <div class="col-md-6 mb32">
                                                         <a t-att-href="'/rewardee/%s' %r.id">
@@ -210,6 +236,11 @@
                                         <div class="col-md-12">
                                             <div class="col-md-6 mt16">
                                                 <!--<span t-field="rewardee.partner_id.image" t-field-options="{&quot;widget&quot;: &quot;image&quot;}"/>-->
+                                                <!-- #if VERSION == "17.0" -->
+                                                <img t-att-src="website.imagemagick_url(rewardee.partner_id, 'image_1920', 'website_hr_academy.im_hr_single')" class="img img-rounded img-responsive shadow" style=""/>
+                                                <!-- #elif VERSION == "master" -->
+                                                <img t-att-src="website.imagemagick_url(rewardee.partner_id, 'image', 'website_hr_academy.im_hr_single')" class="img img-rounded img-responsive shadow" style=""/>
+                                                <!-- #endif -->
                                             </div>
                                             <div class="col-md-6 mb32">
                                                 <h2 class="mb32" t-field="rewardee.partner_id.name"/>
@@ -245,6 +276,9 @@
                                                     <li><i class="fa fa-user" style="margin-right: 10px; color: #fa0;"/> <span t-field="rewardee.partner_id.function"/></li>
                                                     <li><i class="fa fa-phone" style="margin-right: 10px; color: #fa0;"/> <span t-field="rewardee.partner_id.phone"/></li>
                                                     <li><i class="fa fa-mobile" style="margin-right: 10px; color: #fa0;"/> <span t-field="rewardee.partner_id.mobile"/></li>
+                                                    <!-- #if VERSION == "master" -->
+                                                    <li><i class="fa fa-fax" style="margin-right: 10px; color: #fa0;"/> <span t-field="rewardee.partner_id.fax"/></li>
+                                                    <!-- #endif -->
                                                     <li><i class="fa fa-envelope-o" style="margin-right: 10px; color: #fa0;"/> <span t-field="rewardee.partner_id.email"/></li>
                                                 </ul>
                                             </div>
@@ -549,6 +583,11 @@
                         <t t-foreach="winner" t-as="w">
                             <div class="col-md-3 col-sm-4 col-12 grid-item" style="">
                                 <a href="#" t-att-title="w.name" t-att-reward="w.reward_id.name" t-att-comment="w.comment">
+                                    <!-- #if VERSION == "17.0" -->
+                                    <span t-field="w.sudo().partner_id.image_1920" t-field-options="{&quot;widget&quot;: &quot;image&quot;, &quot;style&quot;: &quot;margin: auto&quot;, &quot;class&quot;: &quot;thumbnail img-thumbnail&quot;}"/>
+                                    <!-- #elif VERSION == "master" -->
+                                    <span t-field="w.sudo().partner_id.image" t-field-options="{&quot;widget&quot;: &quot;image&quot;, &quot;style&quot;: &quot;margin: auto&quot;, &quot;class&quot;: &quot;thumbnail img-thumbnail&quot;}"/>
+                                    <!-- #endif -->
                                 </a>
                             </div>
                         </t>
@@ -561,6 +600,11 @@
         <record id="action_rewardee_all_view" model="ir.actions.act_window">
             <field name="name">Academy Rewardee</field>
             <field name="res_model">academy.rewardee</field>
+            <!-- #if VERSION == "17.0" -->
+            <!-- <field name="view_type">form</field> -->
+            <!-- #elif VERSION == "master" -->
+            <field name="view_type">form</field>
+            <!-- #endif -->
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_rewardee_tree"/>
             <field name="context">{"search_default_current": 1}</field>
@@ -570,10 +614,27 @@
         <record id="action_reward_all_view" model="ir.actions.act_window">
             <field name="name">Academy Reward</field>
             <field name="res_model">academy.reward</field>
+            <!-- #if VERSION == "17.0" -->
+            <!-- <field name="view_type">form</field> -->
+            <!-- #elif VERSION == "master" -->
+            <field name="view_type">form</field>
+            <!-- #endif -->
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_reward_tree"/>
             <field name="context">{"search_default_current": 1}</field>
         </record>
+        <!-- #if VERSION == "17.0" -->
+        <menuitem id="menu_rewardee_all_menu" name="Reward Menu" parent="crm.crm_menu_root" sequence="100" />
+        <menuitem id="menu_rewardee_all_view" name="Rewardee" parent="menu_rewardee_all_menu" sequence="100" action="action_rewardee_all_view" />
+        <menuitem id="menu_reward_all_view" name="Reward" parent="menu_rewardee_all_menu" sequence="101" action="action_reward_all_view" />
+        <!-- #elif VERSION == "master" -->
+        <menuitem id="menu_rewardee_all_view" name="Rewardee" parent="base.menu_partner_form" sequence="100" action="action_rewardee_all_view"/>
+        <menuitem id="menu_reward_all_view" name="Reward" parent="base.menu_partner_form" sequence="101" action="action_reward_all_view"/>
+        <!-- #endif -->
 
     </data>
+<!-- #if VERSION >= '14' -->
 </odoo>
+<!-- #elif VERSION < '14' -->
+</openerp>
+<!-- #endif -->
