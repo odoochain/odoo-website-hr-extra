@@ -1,4 +1,5 @@
-<odoo>
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
     <data>
 
         <!-- Layout add nav and footer -->
@@ -7,13 +8,14 @@
                 <li><a href="/rewardees">Our Rewardees</a></li>
             </xpath>
         </template>
-
+        
         <template id="footer_custom" inherit_id="website.template_footer_minimalist" name="Footer Rewardees Link Minimalist">
             <xpath expr="//li[a[@href='/contactus']]" position="after">
                 <li><a href="/rewardees">Our Rewardees</a></li>
             </xpath>
         </template>
         
+        <template id="index_rewardees" name="Our Rewardees">
             <t t-call="website.layout">
                 <div id="wrap">
                     <div class="oe_structure"></div>
@@ -254,6 +256,7 @@
                                                     <li><i class="fa fa-user" style="margin-right: 10px; color: #fa0;"/> <span t-field="rewardee.partner_id.function"/></li>
                                                     <li><i class="fa fa-phone" style="margin-right: 10px; color: #fa0;"/> <span t-field="rewardee.partner_id.phone"/></li>
                                                     <li><i class="fa fa-mobile" style="margin-right: 10px; color: #fa0;"/> <span t-field="rewardee.partner_id.mobile"/></li>
+                                                    <!-- <li><i class="fa fa-fax" style="margin-right: 10px; color: #fa0;"/> <span t-field="rewardee.partner_id.fax"/></li> -->
                                                     <li><i class="fa fa-envelope-o" style="margin-right: 10px; color: #fa0;"/> <span t-field="rewardee.partner_id.email"/></li>
                                                 </ul>
                                             </div>
@@ -568,27 +571,27 @@
         </template>
 
         <!-- rewardee action window -->
-        <record id="action_rewardee_all_view" model="ir.actions.act_window">
-            <field name="name">Academy Rewardee</field>
-            <field name="res_model">academy.rewardee</field>
-            <!-- <field name="view_type">form</field> -->
-            <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="view_rewardee_tree"/>
-            <field name="context">{"search_default_current": 1}</field>
+       <record id="action_rewardee_all_view" model="ir.actions.act_window">
+          <field name="name">Academy Rewardee</field>
+          <field name="res_model">academy.rewardee</field>
+          <!-- <field name="view_type">form</field> -->
+          <field name="view_mode">tree,form</field>
+          <field name="view_id" ref="view_rewardee_tree" />
+          <field name="context">{"search_default_current": 1}</field>
         </record>
-       
+        
         <!-- reward action window -->
         <record id="action_reward_all_view" model="ir.actions.act_window">
-            <field name="name">Academy Reward</field>
-            <field name="res_model">academy.reward</field>
-            <!-- <field name="view_type">form</field> -->
-            <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="view_reward_tree"/>
-            <field name="context">{"search_default_current": 1}</field>
+          <field name="name">Academy Reward</field>
+          <field name="res_model">academy.reward</field>
+          <!-- <field name="view_type">form</field> -->
+          <field name="view_mode">tree,form</field>
+          <field name="view_id" ref="view_reward_tree" />
+          <field name="context">{"search_default_current": 1}</field>
         </record>
         <menuitem id="menu_rewardee_all_menu" name="Reward Menu" parent="crm.crm_menu_root" sequence="100" />
         <menuitem id="menu_rewardee_all_view" name="Rewardee" parent="menu_rewardee_all_menu" sequence="100" action="action_rewardee_all_view" />
         <menuitem id="menu_reward_all_view" name="Reward" parent="menu_rewardee_all_menu" sequence="101" action="action_reward_all_view" />
 
     </data>
-</odoo>
+</openerp>
